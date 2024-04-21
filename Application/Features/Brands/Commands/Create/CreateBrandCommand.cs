@@ -1,5 +1,4 @@
-﻿using Application.Features.Brands.Dtos;
-using Application.Services.Repositories;
+﻿using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
