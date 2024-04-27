@@ -1,6 +1,6 @@
-﻿namespace Application.Features.Models.Queries.GetList;
+﻿namespace Application.Features.Models.Queries.GetListByDynamic;
 
-public class GetListModelListItemDto
+public class GetListByDynamicModelListItemDto
 {
     public Guid Id { get; set; }
     public string BrandName { get; set; }
