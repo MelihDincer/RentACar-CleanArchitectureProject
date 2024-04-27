@@ -12,10 +12,8 @@
     <Folder Include="Features\Models\Commands\Delete\" />
     <Folder Include="Features\Models\Commands\Update\" />
     <Folder Include="Features\Models\Constants\" />
-    <Folder Include="Features\Models\Queries\GetList\" />
     <Folder Include="Features\Models\Queries\GetById\" />
     <Folder Include="Features\Models\Rules\" />
-    <Folder Include="Features\Models\Profiles\" />
   </ItemGroup>
 
   <ItemGroup>
