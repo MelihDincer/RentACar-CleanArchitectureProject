@@ -8,8 +8,7 @@ public static class ApplicationServiceRegistration
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        //Uygulama açıldığında git iş kuralı olan herşeyi bul ve IoC'ye ekle.
-        services.AddSubClassesOfType(Assembly.GetExecutingAssembly(),typeof(BaseBusinessRules)); //BaseBusinessRules türünde olan her şeyi IoC'ye ekle.
+        services.AddSubClassesOfType(Assembly.GetExecutingAssembly(), typeof(BaseBusinessRules)); //BaseBusinessRules türünde olan her şeyi IoC'ye ekle.
 
         //Mevcut çalışan assemblydeki
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
@@ -21,12 +20,9 @@ public static class ApplicationServiceRegistration
         return services;
     }
 
-    public static IServiceCollection AddSubClassesOfType(
-       this IServiceCollection services,
-       Assembly assembly,
-       Type type,
-       Func<IServiceCollection, Type, IServiceCollection>? addWithLifeCycle = null
-   )
+    //Uygulama açıldığında git iş kuralı olan herşeyi bul ve IoC'ye ekle.
+    public static IServiceCollection AddSubClassesOfType(this IServiceCollection services, Assembly assembly, Type type,
+        Func<IServiceCollection, Type, IServiceCollection>? addWithLifeCycle = null)
     {
         var types = assembly.GetTypes().Where(t => t.IsSubclassOf(type) && type != t).ToList();
         foreach (var item in types)
