@@ -1,4 +1,6 @@
-﻿using Core.Application.Rules;
+﻿using Core.Application.Pipelines.Validation;
+using Core.Application.Rules;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -8,14 +10,18 @@ public static class ApplicationServiceRegistration
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
         services.AddSubClassesOfType(Assembly.GetExecutingAssembly(), typeof(BaseBusinessRules)); //BaseBusinessRules türünde olan her şeyi IoC'ye ekle.
 
-        //Mevcut çalışan assemblydeki
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
         //Mediator'a: Git bütün assembly'i tara. Orada commandleri, queryleri bul. Onların handlerlarını bul. Onları birbirleriyle eşleştir ve listene koy. Sana ben bir send yaptığımda git onun handlerını çalıştır.
         services.AddMediatR(configuration =>
         {
             configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+
+            configuration.AddOpenBehavior(typeof(RequestValidationBehavior<,>)); //Eğer bir request çalıştıracaksan bu middleware den geçir.
         });
         return services;
     }
